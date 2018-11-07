@@ -1,0 +1,28 @@
+body{
+  margin: 0;
+  background-color: white;
+}
+
+.marvel-app{
+  width: 1440px;
+  height: 1430px;
+  background-color: #f4f8fb;
+  margin-left: calc(50% - 720px);
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.character-list-area{
+  width: 94%;
+  height: 1080px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px 0 rgba(69, 91, 99, 0.08);
+  background-color: #ffffff;
+  margin: 3%;
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none;
+  -khtml-user-select: none; 
+  -moz-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;
+}

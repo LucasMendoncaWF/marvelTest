@@ -1,0 +1,61 @@
+.filters-container{
+    padding: 0px 35px;
+    margin: 20px 0px 0px 0px;
+    height: 56px;
+    display: flex;
+}
+
+.character-select{
+    width: 385px;
+    height: 51px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #f1f1f2;
+    border-bottom:2px solid #9b9b9b;
+    font-family: Roboto;
+    padding-left: 5px; 
+}
+
+.filter-az{
+    display: flex;
+    height: 40px;
+    margin-top: calc(28px - 20px);
+    width: 150px;
+    margin-left: 40px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.filter-az:hover{
+    opacity: 0.6;
+}
+
+.filter-az-image{
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin: 5px;
+}
+
+.filter-az-text{
+    width: 24px;
+    height: 24px;
+    font-family: Roboto;
+    font-size: 14px;
+    text-align: left;
+    color: #4a4a4a;
+    margin: 10px;
+    margin-top: 8px;
+}
+
+.filter-az-arrow-area{
+    width: 24px;
+    height: 24px;
+}
+
+.filter-az-arrow{
+    margin-top: calc(12px - 4px);
+    width: 20px;
+    height: 12px;
+    object-fit: contain;
+}
