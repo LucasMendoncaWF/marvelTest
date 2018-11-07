@@ -14,12 +14,14 @@ class Filters extends Component {
      var order = !this.state.order;
      this.props.getCharacters(order, this.state.filterInput);
      this.setState({order: order});
+     this.props.changePage(1);
  }
 
  changeFilter =(e) =>{
     var filter = e.target.value;
-    this.props.getCharacters(this.state.order, filter);
     this.setState({filterInput: filter});
+    this.props.changePage(1);
+    this.props.getCharacters(this.state.order, filter);
  }
 
   render() {

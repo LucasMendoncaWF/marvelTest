@@ -8,7 +8,6 @@ class CharactersList extends Component {
     return (
       <div className='charactes-list-container'>
        {Object.keys(this.props.characters).map(key => {
-         console.log(key);
            if(this.props.characters[key].page === parseInt(this.props.page)){
             return <Character key={key} characterInfo={this.props.characters[key]} />
            }

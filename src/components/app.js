@@ -25,9 +25,7 @@ compareZA = (a,b) => {
   return (aName < bName) ? 1 : (aName > bName) ? -1 : 0;
 }
 
-getCharacters = (order, filter) =>{
-    var actualPage = 1;
-    var characterNumber = 1;
+getCharacters = (order, filter) =>{ 
     var marvelCharacters = new MarvelCharactersLoader();
     marvelCharacters.getAllMarvelCharacters((characters) =>{
       var charactersSorted = [];
@@ -36,6 +34,9 @@ getCharacters = (order, filter) =>{
       }else{
         charactersSorted = characters.sort(this.compareZA);
       }
+      var actualPage = 1;
+      this.setState({maxPage: actualPage});
+      var characterNumber = 1;
         this.setState({
           marvelCharacters: charactersSorted.reduce((marvelChars, character) => {
             var filterNew = filter.toUpperCase();
@@ -44,8 +45,9 @@ getCharacters = (order, filter) =>{
               character['page'] = actualPage;
               marvelChars[character.id] = character;          
               characterNumber++;
-              if(characterNumber === 13){
+              if(characterNumber > 12){
                 actualPage++;
+                console.log(actualPage);
                 this.setState({maxPage: actualPage});
                 characterNumber = 1;
               }      

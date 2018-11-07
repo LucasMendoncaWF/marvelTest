@@ -18,7 +18,7 @@ class CharactersArea extends Component {
     return (
       <div className='character-area-container'>
         <div className='area-title'>Character</div>
-        <Filters getCharacters={this.props.getCharacters}/>
+        <Filters changePage={this.changePage} getCharacters={this.props.getCharacters}/>
         <CharactersList page={this.state.page} characters={this.props.characters}/>
         <PageSelector changePage={this.changePage} maxPageNumber={this.props.maxPage} pageSelected={this.state.page}/>
       </div>

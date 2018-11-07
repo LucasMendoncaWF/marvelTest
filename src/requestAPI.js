@@ -34,7 +34,6 @@ class MarvelCharacterLoader {
           const results = response.data.results;
           const concatedResults = prevResults.concat(results);
           Callback(concatedResults);
-          console.log(results.length);
           if (results.length < 100) {
             resolve(concatedResults);
           } else {
