@@ -28,7 +28,7 @@ class Filters extends Component {
   render() {
     return (
       <div className='filters-container'>
-        <input className='character-select' onChange={this.changeFilter} type='text' placeholder='Characters' value={this.state.filterInput}/>
+        <input className='character-input' onChange={this.changeFilter} type='text' placeholder='Characters' value={this.state.filterInput}/>
         <div className='filter-az' onClick={this.changeOrder}>
             <img className='filter-az-image' alt='filter' src={FilterAZ}/>
             <div className='filter-az-text'>{(() =>{if(this.state.order){return 'A-Z'}else{return 'Z-A'}})()}</div>
