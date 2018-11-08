@@ -4,17 +4,17 @@ import ArrowLeft from '../images/arrow-left.svg';
 import ArrowRigth from '../images/arrow-right.svg';
 
 class PageSelector extends Component {
-
+//altera a página de acordo com o valor do input
 changeInputPage = (e) =>{
     this.props.changePage(e.target.value);
 }
-
+//aumenta uma página
 addPage = () =>{
     if(this.props.pageSelected < this.props.maxPageNumber){
         this.props.changePage(this.props.pageSelected + 1);
     }
 }
-
+//diminui uma página
 removePage = () =>{
     if(this.props.pageSelected > 1){
         this.props.changePage(this.props.pageSelected - 1);

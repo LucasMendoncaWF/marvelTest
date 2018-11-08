@@ -9,6 +9,8 @@ const configApi = {
 
 class MarvelCharacterLoader {
   
+  page = 1;
+
   static getMarvelCharacters(origOptions = {}) {
     const stamp = moment().unix();
     const defaultPageData = { page: 1, quantity: 100 };
@@ -27,18 +29,18 @@ class MarvelCharacterLoader {
   }
 
   getNextCharactersPage(Callback, prevResults = []) {
-    var page = 1;
     return new Promise((resolve) => {  
-    MarvelCharacterLoader.getMarvelCharacters({ page: page }).then(Apiresponse => Apiresponse.json()).then(response => {
-          page++;
-          const results = response.data.results;
-          const concatedResults = prevResults.concat(results);
-          Callback(concatedResults);
-          if (results.length < 100) {
-            resolve(concatedResults);
-          } else {
-            //resolve(this.getNextCharactersPage(Callback, concatedResults));
-          }
+    MarvelCharacterLoader.getMarvelCharacters({ page: this.page }).then(Apiresponse => Apiresponse.json()).then(response => {
+      const results = response.data.results;
+      const concatedResults = prevResults.concat(results);
+
+      Callback(concatedResults);
+      this.page++;
+        if (results.length < 100) {
+          resolve(concatedResults);
+        } else {
+          resolve(this.getNextCharactersPage(Callback, concatedResults));
+        }
         });
     });
   }

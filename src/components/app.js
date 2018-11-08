@@ -8,58 +8,83 @@ import CharactersArea from './characters-area';
 
 class App extends Component {
 
+order= true
+
 state = {
-    marvelCharacters: {},
-    maxPage: 0
+    marvelCharactersNew: {},
+    characters: {},
+    maxPage: 0,
+    filter: ''
 };
 
-compareAZ = (a,b) => {
-  var aName = (a.name.split('(')[0] || a.name).trim().toUpperCase();
-  var bName = (b.name.split('(')[0] || b.name).trim().toUpperCase();
-  return (aName < bName) ? -1 : (aName > bName) ? 1 : 0;
+//Ordenação
+compare = (a,b) => {
+  let aName = a.name.toUpperCase();
+  let bName = b.name.toUpperCase();
+  if(this.order){
+    return (aName < bName) ? -1 : (aName > bName) ? 1 : 0; 
+  }else{
+    return (aName < bName) ? 1 : (aName > bName) ? -1 : 0;
+  }  
 }
 
-compareZA = (a,b) => {
-  var aName = (a.name.split('(')[0] || a.name).trim().toUpperCase();
-  var bName = (b.name.split('(')[0] || b.name).trim().toUpperCase();
-  return (aName < bName) ? 1 : (aName > bName) ? -1 : 0;
+//Alteração da ordem de A-Z ou Z-A
+changeOrder = (order) =>{
+  this.order = order;
+  this.getCharacters();
 }
 
-getCharacters = (order, filter) =>{ 
-    var marvelCharacters = new MarvelCharactersLoader();
-    marvelCharacters.getAllMarvelCharacters((characters) =>{
-      var charactersSorted = [];
-      if(order){
-      charactersSorted = characters.sort(this.compareAZ);
-      }else{
-        charactersSorted = characters.sort(this.compareZA);
-      }
-      var actualPage = 1;
+//Filtra de acordo com o input de filtro
+changeFilter = (filter) =>{
+  this.setState({filter: filter});
+  this.getCharacters();
+}
+
+getCharacters = () =>{ 
+      //Ordenação
+      let charactersSorted = [];
+      charactersSorted = this.state.characters.sort(this.compare);
+
+      //variaveis de paginação
+      let actualPage = 1;
       this.setState({maxPage: actualPage});
-      var characterNumber = 1;
+      let characterNumber = 1;
+      
+      //Atribuição dos personagens para o state
+      let charactersOrdered = [];
+      for(let char of charactersSorted){
+        //filtro e nome
+        const filterNew = this.state.filter.toUpperCase();
+        const charName = char.name.toUpperCase();
+
+        //filtro de acordo com o nome do personagem e o valor inserido no input
+        if(charName.indexOf(filterNew) !== -1){ 
+          //definição da página do personagem atual 
+          char['page'] = actualPage;       
+          charactersOrdered.push(char); 
+          
+          //Alteração de página a cada 12 personagens    
+          characterNumber++;
+          if(characterNumber > 12){
+            actualPage++;
+            this.setState({maxPage: actualPage});
+            characterNumber = 1;
+          }      
+        }
+      }
+      //personagens para state
         this.setState({
-          marvelCharacters: charactersSorted.reduce((marvelChars, character) => {
-            var filterNew = filter.toUpperCase();
-            var charName = character.name.toUpperCase();
-            if(charName.indexOf(filterNew) !== -1){
-              character['page'] = actualPage;
-              marvelChars[character.id] = character;          
-              characterNumber++;
-              if(characterNumber > 12){
-                actualPage++;
-                console.log(actualPage);
-                this.setState({maxPage: actualPage});
-                characterNumber = 1;
-              }      
-            }
-            return marvelChars;
-          }, {})
-      });
-    });   
+          marvelCharactersNew: charactersOrdered
+      }); 
 }
 
   componentDidMount() {
-    this.getCharacters(true, '');
+    //Alimenta state charactes com os personagens da requisição
+    let marvelCharacters = new MarvelCharactersLoader();
+    marvelCharacters.getAllMarvelCharacters((characters) =>{
+      this.setState({characters: characters});
+      this.getCharacters('');
+    });
   }
 
   render() {
@@ -67,7 +92,7 @@ getCharacters = (order, filter) =>{
       <div className="marvel-app">
        <Header />
         <div className='character-list-area'>
-          <CharactersArea getCharacters={this.getCharacters} maxPage={this.state.maxPage} characters={this.state.marvelCharacters}/>
+          <CharactersArea getCharacters={this.getCharacters} changeFilter={this.changeFilter} changeOrder={this.changeOrder} maxPage={this.state.maxPage} characters={this.state.marvelCharactersNew}/>
         </div>
        <Footer />
       </div>
