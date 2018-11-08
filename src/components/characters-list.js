@@ -9,9 +9,9 @@ class CharactersList extends Component {
       <div className='charactes-list-container'>
        {
          //Exibe os personagens na tela, caso pertençam na página selecionada
-         Object.keys(this.props.characters).map(key => {
-           if(this.props.characters[key].page === parseInt(this.props.page)){
-            return <Character key={key} characterInfo={this.props.characters[key]} page={this.page} />
+         Object.keys(this.props.characters).map(char => {
+           if(this.props.characters[char].page === parseInt(this.props.page)){
+            return <Character key={char} characterInfo={this.props.characters[char]} page={this.page} />
            }else{
              return null
            }

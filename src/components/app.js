@@ -9,12 +9,12 @@ import CharactersArea from './characters-area';
 class App extends Component {
 
 order= true
+filter = '';
 
 state = {
     marvelCharactersNew: {},
     characters: {},
-    maxPage: 0,
-    filter: ''
+    maxPage: 0
 };
 
 //Ordenação
@@ -36,7 +36,7 @@ changeOrder = (order) =>{
 
 //Filtra de acordo com o input de filtro
 changeFilter = (filter) =>{
-  this.setState({filter: filter});
+  this.filter = filter;
   this.getCharacters();
 }
 
@@ -51,12 +51,10 @@ getCharacters = () =>{
       let characterNumber = 1;
       
       //Atribuição dos personagens para o state
-      let charactersOrdered = [];
+      let charactersOrdered = [];  
+      const filterNew = this.filter.toUpperCase();
       for(let char of charactersSorted){
-        //filtro e nome
-        const filterNew = this.state.filter.toUpperCase();
         const charName = char.name.toUpperCase();
-
         //filtro de acordo com o nome do personagem e o valor inserido no input
         if(charName.indexOf(filterNew) !== -1){ 
           //definição da página do personagem atual 
